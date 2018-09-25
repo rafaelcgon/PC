@@ -95,7 +95,6 @@ def getVar(pc):
 		if (np.sum(ind[0:ND,i],0) <= np.size(pc.coef,0)-1): # TRIANG. TRUNC. 
 			if (i>0):
 				exec('var+= '+string1+string2)
-				print 'var+= '+string1+string2
 				for j in range(ND): # calculate marginal variance 
 					if (ind[j,i]>0):
 						exec('pvar[j,:] += '+string1+string2)
