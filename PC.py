@@ -39,7 +39,6 @@ class PCE(object):
 		Q = np.size(self.pol[:,0]) # number of 1D quadrature points
 		ND = self.inputLim.shape[0]
 		Pmq = self.pol*self.weight[:,None] / self.pol2   
-		print Uq.shape,M,Q,ND
 		self.coef = np.ndarray(np.concatenate([np.repeat(M,ND),np.array([Uq.shape[1]])]).tolist())*0
 		if self.input_qp.shape[0]>1:
 			ind=np.zeros((ND,Q**ND))	# Build the indices for each dimension
@@ -50,11 +49,14 @@ class PCE(object):
 			for n in range(Q**ND): # loop over all quadrature runs
 				aux = np.dot(Pmq[ind[0,n],:][:,None], Pmq[ind[1,n],:][None,:])
 				matShape = np.array([M,M,1])
+				print aux.shape,matShape
+
 				if ND > 2:
 					for i in range(2,ND):
 						aux = np.dot(aux.reshape(matShape),Pmq[ind[i,n],:][None,:])
-						matShape = np.concatenate([np.array(M),matShape])
-				self.coef += np.dot(np.reshape(aux,np.concatenate([matShape,[1]])),np.reshape(Uq[n,:],[1,-1]))
+						matShape = np.concatenate([np.array([M]),matShape])
+				print aux.shape,matShape,Uq.shape,self.coef.shape
+				self.coef += np.dot(np.reshape(aux,matShape),Uq[n,:][None,:])
 		else:
 			self.coef = np.dot(Pmq.T,Uq)
 		self.obs = Uq
@@ -151,7 +153,7 @@ def surrogate(pc,xs,norm=1):
 #surrogate+=np.dot( uq.coef[ind[0,IND[ii]],         ind[1,IND[ii]],:][:,None],  
 #               pol[0,ind[0,IND[ii]],:]*pol[1,ind[1,IND[ii]],:][None,:])      
 
-	return surrogate
+	return np.squeeze(surrogate)
 
 ###########################################################################################
 def getQuadPoint(xlim,xi):
@@ -163,11 +165,13 @@ def getQuadPoint(xlim,xi):
 		xlim = xlim[None,:]
 	if xi.ndim==1:
 		xi = xi[None,:]
-	return ((xi+1)*(xlim[:,1]-xlim[:,0])/2) + xlim[:,0]
+	if xlim.shape[0]>1:
+		xi = np.repeat(xi,xlim.shape[0],axis=0)
+	return ((xi+1)*(xlim[:,1][:,None]-xlim[:,0][:,None])/2) + xlim[:,0][:,None]
 ###########################################################################################
 def getStandardParam(xlim,x): # Considers xi E [-1,1]
 	if xlim.ndim == 1:
 		xlim = xlim[None,:]
 	if x.ndim == 1:
 		x = x[None,:]
-	return (2*(x-xlim[:,0])/(xlim[:,1]-xlim[:,0]))-1
+	return (2*(x-xlim[:,0][:,None])/(xlim[:,1][:,None]-xlim[:,0][:,None]))-1
