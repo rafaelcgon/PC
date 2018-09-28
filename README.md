@@ -1,10 +1,12 @@
 # PC
-Python scripts to perform polynomial chaos expansion in multi-dimensional problems.
-  - The expansion coefficients are computed by tensor product.
-  - 4 orthogonal polynomial basis functions available: Legendre, for uniform input distributions; Hermit, for Gaussian distributions; Jacobi, for beta distributions; and Laguerre, for gamma distributions. 
-  
-The polynomial chaos expansion is an uncertainty quantification methodology in which the response of model outputs to uncertin input parameters is established by spectral projection with orthogonal polynomial basis functions.  
+The polynomial chaos expansion is an uncertainty quantification methodology in which the response of model outputs to uncertain input parameters is established by spectral projection with orthogonal polynomial basis functions.  
 
+This repository contains Python 2 scripts to perform polynomial chaos expansion in multi-dimensional problems.
+
+  - The expansion coefficients are computed by tensor product.
+  - At the moment, Legendre polynomials are the only basis function available, which assume uniform input distributions.
+  - Other 3 orthogonal polynomial basis functions will be implemented: Hermit, for Gaussian distributions; Jacobi, for beta distributions; and Laguerre, for gamma distributions. 
+  
 
 
 References:
