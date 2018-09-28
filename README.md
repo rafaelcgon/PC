@@ -1,7 +1,7 @@
 # PC
 Python scripts to perform polynomial chaos expansion in multi-dimensional problems.
   - The expansion coefficients are computed by tensor product.
-  - 3 orthogonal polynomial basis functions available: Legendre, for uniform input distributions; Hermit, for Gaussian distributions; and Laguerre, for beta distributions.
+  - 3 orthogonal polynomial basis functions available: Legendre, for uniform input distributions; Hermit, for Gaussian distributions; and Jacobi, for beta distributions.
   
 The polynomial chaos approach is based on constructing a response surface for a model output as a function of uncertain input parameters. 
 
