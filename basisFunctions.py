@@ -9,7 +9,8 @@ def gaussQuad(basis,polOrder):
 	if (basis == 'legendre')|(basis == 'Legendre'):
 		return np.polynomial.legendre.leggauss(polOrder+1)
 	elif (basis == 'hermite')|(basis == 'Hermite'):
-		return np.polynomial.hermite.hermgauss(polOrder+1)
+		qp,w= np.polynomial.hermite_e.hermegauss(polOrder+1)
+		return qp , w/np.sqrt(2*np.pi)
 	else:
 		return np.polynomial.laguerre.laggauss(polOrder+1)
 
@@ -25,10 +26,10 @@ def getBasis(x,N,basis='Legendre'):
 		P = legendrePol(x,N)
 		P2 = (2./(2*np.array(range(N+1))+1.))
 	elif (basis == 'hermite')|(basis == 'Hermite'):
-		P = spPol(x,N)
+		P = spPol(x,N,basis)
 		P2 = np.array([np.sqrt(np.pi)*(2**n)*factorial(n) for n in range(N+1)])
 	elif (basis == 'laguerre')|(basis == 'Laguerre'):
-		P = laguerrePol(x,N)
+		P = laguerrePol(x,N,basis)
 		P2 = np.array([sp.gamma(n+1)/factorial(n) for n in range(N+1)])
 	return P,P2
 #####################################################################################
