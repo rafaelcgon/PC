@@ -80,7 +80,7 @@ def spPol(x,N,basis):
 	
 	P = np.array(np.zeros((np.size(x),N+1)))
 	if (basis == 'hermite')|(basis == 'Hermite'):
-		command = 'P[:,n]=sp.hermite(n)(x)'
+		command = 'P[:,n]=sp.hermitenorm(n)(x)'
 	elif (basis == 'laguerre')|(basis == 'Laguerre'):
 		command = 'P[:,n]=sp.laguerre(n)(x)'
 	else:
